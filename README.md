@@ -12,8 +12,8 @@
 </p>
 
 <h2 id="sobre">Sobre</h2>
-<p>Álbum de fotos com carousel slider que responde ao toque e a interação com as miniaturas, criando assim fluidez e responsividade para a mudança de fotos.</p>
-<p>Tendo junto um contador para auxiliar o usuario a identificar quantas fotos há no album atualmente<p>
+<p>Utilizei a API de fotos do Pexels para criar um carrousel de imagens e miniaturas que respondem ao toque, onde é possível deslizar para ambos os lados, assim criando: fluidez, responsividade e interatividade para navegar entre as fotos</p>
+<p>Para facilitar a visualização rápida dos itens e informações, contamos com um contador no canto inferior direito para saber a quantidade total de itens e miniaturas para facilitar a navegação</p>
  
 <h2 id="tecnologias">Tecnologias</h2>
 <img src="https://img.shields.io/static/v1?label=React&message=Native&color=7159c1&style=for-the-badge&logo=react"/>
