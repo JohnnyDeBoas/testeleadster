@@ -1,4 +1,11 @@
-import React, {useState, useRef, Component} from 'react';
+/* eslint-disable prettier/prettier */
+/* eslint-disable react-native/no-inline-styles */
+import React, {useState, useRef, useEffect} from 'react';
+import Carousel, {Pagination} from 'react-native-snap-carousel';
+import client from './src/services/Api';
+import Header from './assets/components/header';
+import Footer from './assets/components/Footer/Footer';
+
 import {
   TouchableOpacity,
   View,
@@ -7,39 +14,30 @@ import {
   FlatList,
   Dimensions,
 } from 'react-native';
-import Carousel, {Pagination} from 'react-native-snap-carousel';
-import api from './src/services/Api';
+
 const {width} = Dimensions.get('window');
 const SPACING = 10;
 const THUMB_SIZE = 80;
-
-const IMAGES = {
-  image1: require('./assets/images/1.jpeg'),
-  image2: require('./assets/images/2.jpeg'),
-  image3: require('./assets/images/3.jpeg'),
-  image4: require('./assets/images/4.jpeg'),
-  image5: require('./assets/images/5.jpeg'),
-  image6: require('./assets/images/6.jpeg'),
-  image7: require('./assets/images/7.jpeg'),
-};
-
 const App = () => {
+  const [images, setImages] = useState([]);
+
+  useEffect(() => {
+    client.photos.curated({per_page: 7}).then(photos => {
+      setImages(photos.photos);
+    });
+  }, []);
+
   const carouselRef = useRef();
   const onTouchThumbnail = touched => {
-    if (touched === indexSelected) return;
+    if (touched === indexSelected) {
+      return;
+    }
     carouselRef?.current?.snapToItem(touched);
   };
   const flatListRef = useRef();
-  const [images, setImages] = useState([
-    {id: '1', image: IMAGES.image1},
-    {id: '2', image: IMAGES.image2},
-    {id: '3', image: IMAGES.image3},
-    {id: '4', image: IMAGES.image4},
-    {id: '5', image: IMAGES.image5},
-    {id: '6', image: IMAGES.image6},
-    {id: '7', image: IMAGES.image7},
-  ]);
+
   const [indexSelected, setIndexSelected] = useState(0);
+  // eslint-disable-next-line no-shadow
   const onSelect = indexSelected => {
     setIndexSelected(indexSelected);
     flatListRef?.current?.scrollToOffset({
@@ -49,16 +47,8 @@ const App = () => {
   };
 
   return (
-    <View style={{flex: 1, backgroundColor: 'black', alignItems: 'center'}}>
-      <Text
-        style={{
-          color: 'white',
-          fontSize: 32,
-          marginTop: 50,
-          marginBottom: 25,
-        }}>
-        Gallery Leadster
-      </Text>
+    <View style={{flex: 1, backgroundColor: 'white', alignItems: 'center'}}>
+      <Header/>
       <View style={{flex: 1 / 2, marginTop: 20}}>
         <Carousel
           ref={carouselRef}
@@ -69,41 +59,47 @@ const App = () => {
           renderItem={({item, index}) => (
             <Image
               key={index}
+              // eslint-disable-next-line react-native/no-inline-styles
               style={{width: '100%', height: '100%'}}
               layout="default"
               resizeMode="contain"
-              source={item.image}
+              source={{
+                uri: item.src.original,
+              }}
             />
           )}
         />
         <Pagination
-          inactiveDotColor="gray"
-          dotColor={'orange'}
+          inactiveDotColor="blue"
+          dotColor={'black'}
           activeDotIndex={indexSelected}
           dotsLength={images.length}
           animatedDuration={150}
           inactiveDotScale={1}
         />
-      </View>
-      <View
-        style={{
-          marginTop: 20,
-          paddingHorizontal: 32,
-          alignSelf: 'flex-end',
-        }}>
-        <Text
+         <Text
           style={{
-            color: 'white',
+            textAlign:'center',
+            color: 'black',
             fontSize: 22,
           }}>
           {indexSelected + 1}/{images.length}
         </Text>
       </View>
+      <Footer/>
+      <View
+        style={{
+          marginTop: -250,
+          paddingHorizontal: 52,
+          alignSelf: 'flex-end',
+        }}>
+      
+      </View>
       <FlatList
         ref={flatListRef}
         horizontal={true}
         data={images}
-        style={{position: 'absolute', bottom: 80}}
+        style={{position: 'absolute', bottom: 100}}
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{
           paddingHorizontal: SPACING,
@@ -120,9 +116,11 @@ const App = () => {
                 marginRight: SPACING,
                 borderRadius: 16,
                 borderWidth: index === indexSelected ? 4 : 0.75,
-                borderColor: index === indexSelected ? 'orange' : 'white',
+                borderColor: index === indexSelected ? '#4299F6' : 'white',
               }}
-              source={item.image}
+              source={{
+                uri: item.src.portrait,
+              }}
             />
           </TouchableOpacity>
         )}
