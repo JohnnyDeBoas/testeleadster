@@ -24,7 +24,7 @@
 <a href="https://github.com/JohnnyDeBoas">
  <img style="border-radius: 50%;" src="https://user-images.githubusercontent.com/86363103/145708244-945873dd-bd8a-4281-ba30-090f71f7983c.jpg" width="100px;" alt=""/>
  <br />
- <sub><b>João Lucas B. Araujo</b></sub></a> <a href="https://blog.rocketseat.com.br/author/thiago//"</a> :bulb:
+ <sub><b>João Lucas B. Araujo</b></sub></a> :bulb:
 
 
 Feito com ❤️ por João Lucas 👋🏽 Entre em contato!
